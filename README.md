@@ -20,7 +20,7 @@ names(testActivity) <- "activity"
 ### Add the set type, subject num and activity labels to the test data as new columns
 testData <- cbind(set = "test", testSubject, testActivity, testData)
 
-## Clean the train data, do the same process
+## Clean the train data, do the same process as previous
 trainData <- read.table("UCI HAR Dataset/train/X_train.txt")
 trainData <- trainData[, featureAvail]
 names(trainData) <- feature[featureAvail, 2]
