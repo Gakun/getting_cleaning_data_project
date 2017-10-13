@@ -1,46 +1,15 @@
-# Script of Getting and Cleaning Data Course Project - Getting and cleaning the UCI HAR Dataset
-library(dplyr)
+# Getting and cleaning the UCI HAR Dataset
+This Repo provides a method to cleaning and summarizing the UCI HAR Dataset
 
-## Read the feature data and get the position of all mean and std feature
-feature <- read.table("UCI HAR Dataset/features.txt")
-featureAvail <- grep("mean\\(\\)|std\\(\\)", feature[,2])
+## Brief of cleaning method
+1. Read the test dataset and training datasets. Extract only the measurements on the mean and standard deviation for each measurement of two datasets.
+2. Add the subject id, activities id and set labels (test or train) to the two dataset
+3. Combine the test and training datasets
+4. Labels the data set with descriptive variable names using provided activity labels
+5. Calculate the average of each variable for each activity and each suject, save the result as a txt file.
 
-## Cleaning test data
-### Read the test dataset, extract mean and std feature and rename the column
-testData <- read.table("UCI HAR Dataset/test/X_test.txt")
-testData <- testData[, featureAvail]
-names(testData) <- feature[featureAvail, 2]
-
-### Read the subjects data and activity labels
-testSubject <- read.table("UCI HAR Dataset/test/subject_test.txt")
-names(testSubject) <- "subject"
-testActivity <- read.table("UCI HAR Dataset/test/y_test.txt")
-names(testActivity) <- "activity"
-
-### Add the set type, subject num and activity labels to the test data as new columns
-testData <- cbind(set = "test", testSubject, testActivity, testData)
-
-## Clean the train data, do the same process as previous
-trainData <- read.table("UCI HAR Dataset/train/X_train.txt")
-trainData <- trainData[, featureAvail]
-names(trainData) <- feature[featureAvail, 2]
-
-trainSubject <- read.table("UCI HAR Dataset/train/subject_train.txt")
-names(trainSubject) <- "subject"
-trainActivity <- read.table("UCI HAR Dataset/train/y_train.txt")
-names(trainActivity) <- "activity"
-
-trainData <- cbind(set = "train", trainSubject, trainActivity, trainData)
-
-## Combine the testData with trainData
-data <- rbind(trainData, testData)
-
-## Merge the data with activity labels name
-labels <- read.table("UCI HAR Dataset/activity_labels.txt")
-names(labels) <- c("activity", "activity_name")
-data <- merge(labels, data)
-data <- data[,-1]
-
-## Calculate the average of each variables for each activity and subject, and save as data_sum.csv
-dataSum <- data %>% select(-set) %>%group_by(activity_name, subject) %>% summarise_all(mean)
-write.table(dataSum, "data_sum.txt", row.names = FALSE)
+## Files contained in the repo
+1. README.md
+2. CodeBook.md: Describes the variables and the steps to clean up the data
+3. run_analysis.R: R script to run the cleaning process
+4. data_sum.txt: The final output data of the average of each variable for each activity and each subject
