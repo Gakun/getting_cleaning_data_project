@@ -22,13 +22,15 @@ The output data contains 68 variables and 180 observations. Each observation ref
 The list of all variables and descriptions as follows:
 ### Factors
 1. activity_name: The labels of activity performed in the test
+
 2. subject: The id of the subject
 ### Measurements
 The measurements variables are selected from UCI HAR Dataset. Only the mean and standard deviation are selected. All the measurements are the mean value of the original data for each activity and subject combinations.
 3. tBodyAcc-mean()-X 
+
 4. tBodyAcc-mean()-Y 
-5. tBodyAcc-mean()-Z 
-6. tBodyAcc-std()-X 
+5. tBodyAcc-mean()-Z
+6. tBodyAcc-std()-X
 7. tBodyAcc-std()-Y 
 8. tBodyAcc-std()-Z 
 9. tGravityAcc-mean()-X 
